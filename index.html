@@ -3,9 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+     <link rel="stylesheet" href="style.css">
+    <title>Student Finance Manager</title>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- ================= HEADER ================= -->
+        <header>
+
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h1>Smart Student Finance</h1>
+            </div>
+
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="btn-icon">
+                <i class="fas fa-moon"></i>
+            </button>
+
+        </header>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="main-content">
+
+            <!-- LEFT COLUMN -->
+            <aside class="left-col">
+
+                <!-- Dashboard Section -->
+                <section class="dashboard glass-card">
+
+                    <h2>Dashboard</h2>
+
+                    <div class="summary-cards">
+
+                        <div class="card balance-card">
+                            <h3>Total Balance</h3>
+                            <p id="total-balance">0.00 Rs</p>
+                        </div>
+
+                        <div class="card income-card">
+                            <h3>Income</h3>
+                            <p id="total-income">+0.00 Rs</p>
+                        </div>
+
+                        <div class="card expense-card">
+                            <h3>Expenses</h3>
+                            <p id="total-expense">-0.00 Rs</p>
+                        </div>
+
+                        <div class="card savings-card">
+                            <h3>Savings</h3>
+                            <p id="total-savings">0.00 Rs</p>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Budget Planner -->
+                <section class="budget-planner glass-card">
+
+                    <h2>Monthly Budget</h2>
+
+                    <div class="budget-form">
+                        <input
+                            type="number"
+                            id="budget-input"
+                            placeholder="Set Monthly Budget..."
+                            min="0">
+
+                        <button id="set-budget-btn" class="btn-primary">
+                            Set
+                        </button>
+                    </div>
+
+                    <div class="budget-status">
+
+                        <p>
+                            Remaining:
+                            <span id="budget-remaining">0.00 Rs</span>
+                        </p>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="budget-progress"></div>
+                        </div>
+
+                        <p id="budget-warning" class="warning-text hidden">
+                            Warning: You are exceeding your budget!
+                        </p>
+
+                    </div>
+                </section>
+
 </body>
 </html>
