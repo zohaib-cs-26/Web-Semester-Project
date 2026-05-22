@@ -3,98 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="style.css">
-    <title>Student Finance Manager</title>
+    <title>Smart Student Finance Manager</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <!-- Main Container -->
+<body class="light-mode">
     <div class="container">
-
-        <!-- ================= HEADER ================= -->
+        <!-- Header Section -->
         <header>
-
             <div class="logo">
                 <i class="fas fa-wallet"></i>
                 <h1>Smart Student Finance</h1>
             </div>
-
-            <!-- Theme Toggle Button -->
             <button id="theme-toggle" class="btn-icon">
                 <i class="fas fa-moon"></i>
             </button>
-
         </header>
 
-        <!-- ================= MAIN CONTENT ================= -->
         <div class="main-content">
-
-            <!-- LEFT COLUMN -->
+            <!-- Sidebar / Left Column -->
             <aside class="left-col">
-
-                <!-- Dashboard Section -->
+                <!-- Dashboard Cards -->
                 <section class="dashboard glass-card">
-
                     <h2>Dashboard</h2>
-
                     <div class="summary-cards">
-
                         <div class="card balance-card">
                             <h3>Total Balance</h3>
-                            <p id="total-balance">0.00 Rs</p>
+                            <p id="total-balance">$0.00</p>
                         </div>
-
                         <div class="card income-card">
                             <h3>Income</h3>
-                            <p id="total-income">+0.00 Rs</p>
+                            <p id="total-income">+$0.00</p>
                         </div>
-
                         <div class="card expense-card">
                             <h3>Expenses</h3>
-                            <p id="total-expense">-0.00 Rs</p>
+                            <p id="total-expense">-$0.00</p>
                         </div>
-
                         <div class="card savings-card">
                             <h3>Savings</h3>
-                            <p id="total-savings">0.00 Rs</p>
+                            <p id="total-savings">$0.00</p>
                         </div>
-
                     </div>
                 </section>
 
                 <!-- Budget Planner -->
                 <section class="budget-planner glass-card">
-
                     <h2>Monthly Budget</h2>
-
                     <div class="budget-form">
-                        <input
-                            type="number"
-                            id="budget-input"
-                            placeholder="Set Monthly Budget..."
-                            min="0">
-
-                        <button id="set-budget-btn" class="btn-primary">
-                            Set
-                        </button>
+                        <input type="number" id="budget-input" placeholder="Set Monthly Budget..." min="0">
+                        <button id="set-budget-btn" class="btn-primary">Set</button>
                     </div>
-
                     <div class="budget-status">
-
-                        <p>
-                            Remaining:
-                            <span id="budget-remaining">0.00 Rs</span>
-                        </p>
-
+                        <p>Remaining: <span id="budget-remaining">$0.00</span></p>
                         <div class="progress-bar">
                             <div class="progress-fill" id="budget-progress"></div>
                         </div>
-
-                        <p id="budget-warning" class="warning-text hidden">
-                            Warning: You are exceeding your budget!
-                        </p>
-
+                        <p id="budget-warning" class="warning-text hidden">Warning: You are exceeding your budget!</p>
                     </div>
                 </section>
 
+                <!-- Finance Tips -->
+                <section class="finance-tips glass-card">
+                    <h2><i class="fas fa-lightbulb"></i> Student Tip</h2>
+                    <p id="finance-tip-text">Loading tip...</p>
+                </section>
+            </aside>
+
+            <!-- Main Column -->
+            <main class="center-col">
+                <!-- Add Transaction Form -->
+                <section class="add-transaction glass-card">
+                    <h2 id="form-title">Add Transaction</h2>
+                    <form id="transaction-form">
+                        <input type="hidden" id="transaction-id">
+                        
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" placeholder="E.g., Books, Lunch" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="amount">Amount ($)</label>
+                                <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="type">Type</label>
+                                <select id="type" required>
+                                    <option value="expense">Expense</option>
+                                    <option value="income">Income</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" required>
+                                    <option value="Education">Education</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Bills">Bills</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-full">Save Transaction</button>
+                        <button type="button" id="cancel-edit-btn" class="btn-secondary btn-full hidden">Cancel Edit</button>
+                    </form>
+                </section>
+
+                <!-- Expense Chart -->
+                <section class="chart-section glass-card">
+                    <h2>Expense Distribution</h2>
+                    <div class="canvas-container">
+                        <canvas id="expense-chart"></canvas>
+                    </div>
+                    <div id="chart-legend" class="chart-legend"></div>
+                </section>
+            </main>
+
+            <!-- Right Column -->
+            <aside class="right-col">
+                <!-- Transaction History -->
+                <section class="transactions glass-card">
+                    <div class="transactions-header">
+                        <h2>History</h2>
+                    </div>
+                    
+                    <!-- Search and Filter -->
+                    <div class="search-filter">
+                        <input type="text" id="search-input" placeholder="Search...">
+                        <select id="filter-category">
+                            <option value="All">All Categories</option>
+                            <option value="Education">Education</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="transaction-list" id="transaction-list">
+                        <!-- Transactions will be added here dynamically by JS -->
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Link to external JS file -->
+    <script src="script.js"></script>
 </body>
 </html>
