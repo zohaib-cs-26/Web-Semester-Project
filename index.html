@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Student Finance Manager</title>
 
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="light-mode">
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-wallet"></i>
+            <h1>Smart Finance</h1>
+        </div>
+
+        <button id="theme-toggle" class="btn-icon">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <div class="main-content">
+
+        <!-- LEFT -->
+        <aside class="left-col">
+
+            <section class="glass-card">
+                <h2>Dashboard</h2>
+
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3>Balance</h3>
+                        <p id="total-balance">$0</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Income</h3>
+                        <p id="total-income">$0</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Expense</h3>
+                        <p id="total-expense">$0</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Savings</h3>
+                        <p id="total-savings">$0</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-card">
+                <h2>Budget</h2>
+
+                <input type="number" id="budget-input" placeholder="Set budget">
+                <button id="set-budget-btn" class="btn-primary">Set Budget</button>
+
+                <p>Remaining: <span id="budget-remaining">$0</span></p>
+
+                <div class="progress-bar">
+                    <div id="budget-progress"></div>
+                </div>
+
+                <p id="budget-warning" class="hidden">⚠ Over Budget!</p>
+            </section>
+
+        </aside>
+
+        <!-- CENTER -->
+        <main>
+
+            <section class="glass-card">
+                <h2>Add Transaction</h2>
+
+                <form id="transaction-form">
+
+                    <input type="text" id="title" placeholder="Title" required>
+                    <input type="number" id="amount" placeholder="Amount" required>
+
+                    <select id="type">
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+
+                    <select id="category">
+                        <option>Select Option</option>
+                        <option>Food</option>
+                        <option>Transport</option>
+                        <option>Education</option>
+                        <option>Shopping</option>
+                        <option>Bills</option>
+                        <option>Other</option>
+                    </select>
+
+                    <input type="date" id="date">
+
+                    <button class="btn-primary">Add</button>
+                </form>
+            </section>
+
+        </main>
+
+        <!-- RIGHT -->
+        <aside class="right-col">
+
+            <section class="glass-card">
+                <h2>History</h2>
+
+                <input type="text" id="search-input" placeholder="Search">
+
+                <select id="filter-category">
+                    <option>All</option>
+                    <option>Food</option>
+                    <option>Transport</option>
+                    <option>Education</option>
+                    <option>Shopping</option>
+                    <option>Bills</option>
+                    <option>Other</option>
+                </select>
+
+                <div id="transaction-list"></div>
+            </section>
+
+        </aside>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
