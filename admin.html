@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin Control Panel for Smart Student Finance Manager. Review stats, modify logs, and manage data.">
+  <title>Admin Panel - Smart Student Finance Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="admin-navbar" id="adminNav">
+    <div class="brand-title" id="navBrand">
+      ⚙️ Smart Student Finance <span class="admin-badge">Admin</span>
+    </div>
+    <div class="nav-controls">
+      <a href="index.html" id="navLinkUser">Dashboard</a>
+      <a href="admin.html" class="active" id="navLinkAdmin">Admin Portal</a>
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark Mode" type="button">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Admin Management Dashboard</h1>
+      <p style="color: var(--text-muted);">Monitor overall financial summaries and perform management (CRUD) operations on all records.</p>
+    </header>
+
+    <section class="stats-grid" id="statsGridSection" aria-label="Summary Statistics">
+      <div class="stat-card" id="statCardBalance">
+        <span class="stat-label">Net Balance</span>
+        <span class="stat-value" id="statBalance">Rs. 0</span>
+      </div>
+
+      <div class="stat-card" id="statCardIncome">
+        <span class="stat-label">Total Income</span>
+        <span class="stat-value" id="statIncome" style="color: var(--success-color);">Rs. 0</span>
+      </div>
+
+      <div class="stat-card" id="statCardExpenses">
+        <span class="stat-label">Total Expenses</span>
+        <span class="stat-value" id="statExpenses" style="color: var(--danger-color);">Rs. 0</span>
+      </div>
+
+      <div class="stat-card" id="statCardSavings">
+        <span class="stat-label">Savings Rate</span>
+        <span class="stat-value" id="statSavings">0%</span>
+      </div>
+    </section>
+
+    <section class="card" id="managementLogsSection">
+      <h2 class="card-title">All Financial Records</h2>
+
+      <div id="adminTableContainer"></div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="editModalBackdrop">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+
+      <div class="modal-header">
+        <h3 id="modalHeading">Edit Transaction</h3>
+        <button class="modal-close" id="btnCancelEditCross" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="editTransactionForm" novalidate>
+        <input type="hidden" id="editTxnId">
+
+        <div class="form-group">
+          <label for="editTxnTitle">Transaction Title</label>
+          <input type="text" id="editTxnTitle" class="form-control" placeholder="e.g. Rent" required>
+          <div class="invalid-feedback" id="editTitleError">Please enter a valid title (at least 3 characters).</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 0.8rem;">
+          <label for="editTxnAmount">Amount (Rs.)</label>
+          <input type="number" id="editTxnAmount" class="form-control" placeholder="e.g. 5000" step="1" min="1" required>
+          <div class="invalid-feedback" id="editAmountError">Please enter a positive amount greater than 0.</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 0.8rem;">
+          <label for="editTxnType">Transaction Type</label>
+          <select id="editTxnType" class="form-control" required>
+            <option value="income">Income (+)</option>
+            <option value="expense">Expense (-)</option>
+          </select>
+          <div class="invalid-feedback" id="editTypeError">Please select transaction type.</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 0.8rem;">
+          <label for="editTxnCategory">Category</label>
+          <select id="editTxnCategory" class="form-control" required>
+            <option value="Education">Education</option>
+            <option value="Food">Food</option>
+            <option value="Housing">Housing</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Salary">Salary</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback" id="editCategoryError">Please select a category.</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 0.8rem;">
+          <label for="editTxnDate">Date</label>
+          <input type="date" id="editTxnDate" class="form-control" required>
+          <div class="invalid-feedback" id="editDateError">Please select a valid date.</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 0.8rem;">
+          <label for="editTxnDescription">Description / Note (Optional)</label>
+          <textarea id="editTxnDescription" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelEdit">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveEdit">Save Changes</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
