@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your student budget, track incomes, expenses and save smarter with the Smart Student Finance Manager.">
+  <title>Smart Student Finance Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav id="mainNav">
+    <div class="brand-title" id="navBrand">
+      💸 Smart Student Finance
+    </div>
+    <div class="nav-controls">
+      <a href="index.html" class="active" id="navLinkUser">Dashboard</a>
+      <a href="admin.html" id="navLinkAdmin">Admin Portal</a>
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark Mode" type="button">🌓</button>
+    </div>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Student Financial Dashboard</h1>
+      <p style="color: var(--text-muted);">Track your income, control expenses, and stick to your budgets easily.</p>
+    </header>
+
+    <div class="layout-split">
+      
+      <section class="layout-column-form" id="transactionFormSection">
+        <div class="card">
+          <h2 class="card-title">Add New Record</h2>
+          
+          <form id="addTransactionForm" novalidate>
+            <div class="form-group">
+              <label for="txnTitle">Transaction Title</label>
+              <input type="text" id="txnTitle" class="form-control" placeholder="e.g. Weekly Groceries" required>
+              <div class="invalid-feedback" id="titleError">Please enter a valid title (at least 3 characters).</div>
+            </div>
+
+            <div class="form-group">
+              <label for="txnAmount">Amount (Rs.)</label>
+              <input type="number" id="txnAmount" class="form-control" placeholder="e.g. 5000" step="1" min="1" required>
+              <div class="invalid-feedback" id="amountError">Please enter a positive amount greater than 0.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="txnType">Transaction Type</label>
+              <select id="txnType" class="form-control" required>
+                <option value="" disabled selected>-- Select Type --</option>
+                <option value="income">Income (+)</option>
+                <option value="expense">Expense (-)</option>
+              </select>
+              <div class="invalid-feedback" id="typeError">Please select income or expense.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="txnCategory">Category</label>
+              <select id="txnCategory" class="form-control" required>
+                <option value="" disabled selected>-- Select Category --</option>
+                <option value="Education">Education</option>
+                <option value="Food">Food</option>
+                <option value="Housing">Housing</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Salary">Salary</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="invalid-feedback" id="categoryError">Please select a category.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="txnDate">Date of Transaction</label>
+              <input type="date" id="txnDate" class="form-control" required>
+              <div class="invalid-feedback" id="dateError">Please select a valid date.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="txnDescription">Description / Note (Optional)</label>
+              <textarea id="txnDescription" class="form-control" rows="2" placeholder="e.g. Purchased from college bookstore"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btnSubmitTxn" style="width: 100%; margin-top: 0.5rem;">
+              Save Transaction
+            </button>
+          </form>
+        </div>
+      </section>
