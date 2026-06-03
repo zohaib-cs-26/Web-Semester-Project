@@ -1,0 +1,59 @@
+{
+  "transactions": [
+    {
+      "title": "Part-Time Tutoring",
+      "amount": 2500,
+      "type": "income",
+      "category": "Salary",
+      "date": "2026-05-15",
+      "description": "Monthly earnings from home tuition",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Semester Textbooks",
+      "amount": 4500,
+      "type": "expense",
+      "category": "Education",
+      "date": "2026-05-18",
+      "description": "Purchased reference books from Urdu Bazar"
+    },
+    {
+      "id": "3",
+      "title": "Hostel Rent",
+      "amount": 12000,
+      "type": "expense",
+      "category": "Housing",
+      "date": "2026-05-01",
+      "description": "May room charges with utilities"
+    },
+    {
+      "id": "4",
+      "title": "Weekly Groceries",
+      "amount": 3500,
+      "type": "expense",
+      "category": "Food",
+      "date": "2026-05-22",
+      "description": "Purchased items from Imtiaz Super Store"
+    },
+    {
+      "id": "5",
+      "title": "University Merit Scholarship",
+      "amount": 35000,
+      "type": "income",
+      "category": "Salary",
+      "date": "2026-05-10",
+      "description": "Spring semester academic award"
+    },
+    {
+      "id": "6",
+      "title": "Movie & Dinner",
+      "amount": 2200,
+      "type": "expense",
+      "category": "Entertainment",
+      "date": "2026-05-25",
+      "description": "Cinema ticket and food court meal"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
