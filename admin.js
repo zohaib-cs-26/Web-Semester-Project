@@ -219,3 +219,165 @@ function renderTable() {
     </div>
   `;
 }
+document.querySelectorAll('.btn-edit').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.getAttribute('data-id');
+    loadTransactionToEdit(id);
+  });
+});
+
+document.querySelectorAll('.btn-delete').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.getAttribute('data-id');
+    confirmDelete(id);
+  });
+});
+
+async function loadTransactionToEdit(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load item info: HTTP ${response.status}`);
+    }
+
+    const txn = await response.json();
+
+    editTxnId.value = txn.id;
+    editTxnTitle.value = txn.title;
+    editTxnAmount.value = txn.amount;
+    editTxnType.value = txn.type;
+    editTxnCategory.value = txn.category;
+    editTxnDate.value = txn.date;
+    editTxnDescription.value = txn.description || '';
+
+    editInputs.forEach(input => input.classList.remove('is-invalid'));
+
+    editModalBackdrop.classList.add('show');
+  } catch (error) {
+    alert("Could not load transaction details. The database might be offline.");
+  }
+}
+
+function closeEditModal() {
+  editModalBackdrop.classList.remove('show');
+  editTransactionForm.reset();
+}
+
+async function submitEditForm(event) {
+  event.preventDefault();
+
+  if (!validateEditForm()) {
+    return;
+  }
+
+  const id = editTxnId.value;
+  const updatedTxn = {
+    title: editTxnTitle.value.trim(),
+    amount: parseFloat(editTxnAmount.value),
+    type: editTxnType.value,
+    category: editTxnCategory.value,
+    date: editTxnDate.value,
+    description: editTxnDescription.value.trim()
+  };
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedTxn)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update item: HTTP ${response.status}`);
+    }
+
+    closeEditModal();
+    await fetchAdminData();
+  } catch (error) {
+    alert("Could not save changes to JSON Server database.");
+  }
+}
+
+async function confirmDelete(id) {
+  const txn = transactions.find(t => t.id === id);
+  const title = txn ? txn.title : `#${id}`;
+
+  const hasConfirmed = confirm(`⚠️ Are you sure you want to permanently delete "${title}"? This cannot be undone.`);
+  if (!hasConfirmed) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete transaction: HTTP ${response.status}`);
+    }
+
+    await fetchAdminData();
+  } catch (error) {
+    alert("Could not delete record from server database.");
+  }
+}
+
+function showLoading() {
+  adminTableContainer.innerHTML = `
+    <div class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Loading database records...</p>
+    </div>
+  `;
+}
+
+function showErrorState() {
+  adminTableContainer.innerHTML = `
+    <div class="error-state">
+      <h3>⚠️ Connection Refused</h3>
+      <p>Failed to communicate with JSON Server. Please check that it is running in your terminal:</p>
+      <code style="background: rgba(0,0,0,0.1); padding: 0.5rem; border-radius: 4px; font-weight: bold; margin: 0.5rem 0;">
+        npx json-server --watch db.json --port 3000
+      </code>
+      <button class="btn btn-secondary btn-sm" id="btnRetryLoadAdmin" style="margin-top: 0.5rem; align-self: center;">
+        🔄 Retry Connection
+      </button>
+    </div>
+  `;
+
+  const retryBtn = document.getElementById('btnRetryLoadAdmin');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', fetchAdminData);
+  }
+}
+
+function escapeHTML(str) {
+  if (!str) return '';
+  return str.replace(/[&<>'"]/g,
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}
+
+editTransactionForm.addEventListener('submit', submitEditForm);
+btnCancelEdit.addEventListener('click', closeEditModal);
+btnCancelEditCross.addEventListener('click', closeEditModal);
+
+window.addEventListener('click', (event) => {
+  if (event.target === editModalBackdrop) {
+    closeEditModal();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  fetchAdminData();
+});
